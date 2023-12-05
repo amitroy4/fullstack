@@ -45,7 +45,14 @@ let registrationController = async (req, res) => {
                         otp: otp,
                     })
                     user.save()
-
+                    //send only name, email, id, rule, verify
+                    res.send({
+                        name: user.name,
+                        email: user.email,
+                        id: user._id,
+                        rule: user.rule,
+                        verify: user.verify,
+                    })
 
                     const transporter = nodemailer.createTransport({
                         service: "gmail",
@@ -64,7 +71,7 @@ let registrationController = async (req, res) => {
                     });
 
 
-                    res.send(user)
+
                 });
 
             }

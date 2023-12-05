@@ -11,7 +11,7 @@ let loginController = async (req, res) => {
         bcrypt.compare(password, existingUser[0].password, function (err, result) {
             //    console.log(result);
             if (result) {
-                res.send({ error: "login Successful" })
+                res.send(existingUser)
             } else {
                 res.send({ error: "credencial does not match" })
             }
