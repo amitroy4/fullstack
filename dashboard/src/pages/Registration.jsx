@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Space, Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Registration = () => {
 
@@ -16,7 +16,7 @@ const Registration = () => {
 
         let userData = await axios.post("http://localhost:8000/api/v1/auth/registration", data)
         // console.log("dataEmail",userData.data.email);
-        if(userData.data.email){
+        if (userData.data.email) {
             navigate(`/otp/${userData.data.email}`)
         }
     };
@@ -99,6 +99,16 @@ const Registration = () => {
                             }}
                         >
                             <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                        <Form.Item
+                            name="remember"
+                            wrapperCol={{
+                                offset: 8,
+                                span: 16,
+                            }}
+                        >
+                           
+                        <Link to="/forgotpassword">Forgot Password</Link>
                         </Form.Item>
 
                         <Form.Item
