@@ -7,7 +7,7 @@ const Registration = () => {
 
     let navigate = useNavigate()
     const onFinish = async (values) => {
-        // console.log('Success:', values);
+        console.log('Success:', values);
         let data = {
             name: values.name,
             email: values.email,
@@ -15,7 +15,7 @@ const Registration = () => {
         }
 
         let userData = await axios.post("http://localhost:8000/api/v1/auth/registration", data)
-        // console.log("dataEmail",userData.data.email);
+        console.log("dataEmail",userData);
         if (userData.data.email) {
             navigate(`/otp/${userData.data.email}`)
         }

@@ -8,12 +8,13 @@ const ChangePassword = () => {
     console.log(email);
     let navigate = useNavigate()
     const onFinish = async (values) => {
-        // console.log('Success:', values);
+        console.log('token:', email);
         let data = {
-            password: password,
+            token: email,
+            password: values.password,
         }
 
-        // let otpData = await axios.post("http://localhost:8000/api/v1/auth/forgotpassword", data)
+        let otpData = await axios.post("http://localhost:8000/api/v1/auth/changepassword", data)
         // console.log(otpData.data);
         // if (otpData.data.success == "OTP matched") {
         //     navigate("/login")
