@@ -18,6 +18,8 @@ const Login = () => {
             console.log("You don't have permission");
         } else {
             console.log("Done");
+            navigate("/home")
+            localStorage.setItem("user", JSON.stringify(logData.data[0]))
         }
     };
     const onFinishFailed = (errorInfo) => {

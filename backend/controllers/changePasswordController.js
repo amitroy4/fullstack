@@ -5,17 +5,20 @@ let changePasswordController = async (req, res) => {
     let { token, password } = req.body
     jwt.verify(token, '123', async function(err, decoded) {
         console.log(decoded.email) // bar
-        let existingUser2 = await User.updateOne({email:decoded.email},{
-            password:password,
-            token:"",
-        },{
-            returnNewDcoument: true,
-            new: true,
-            strict:false,
-        })
 
-
-
+        bcrypt.hash(password, 10, async function (err, hash) {
+            let existingUser2 = await User.updateOne({email:decoded.email},{
+                password:hash,
+                token:"",
+            },{
+                returnNewDcoument: true,
+                new: true,
+                strict:false,
+            })
+    
+        });
+        
+        
       });
     console.log(token, password);
 

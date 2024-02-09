@@ -28,7 +28,7 @@ const ForgotPassword = () => {
         <>
             <Space direction="vertical" size={16}>
                 <Card
-                    title="Registration"
+                    title="Forgot Password"
                     style={{
                         width: 300,
                     }}

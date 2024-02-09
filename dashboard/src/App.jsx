@@ -10,6 +10,7 @@ import OtpPage from './pages/OtpPage';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ChangePassword from './pages/ChangePassword';
+import Home from './pages/Home';
 
 function App() {
 
@@ -47,6 +48,11 @@ const router = createBrowserRouter(
       <Route
         path="/changepassword/:email"
         element={<ChangePassword />}
+      >
+      </Route>
+      <Route
+        path="/home"
+        element={<Home />}
       >
       </Route>
     </Route>
