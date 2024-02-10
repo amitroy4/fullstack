@@ -14,12 +14,12 @@ const Login = () => {
 
         let logData = await axios.post("http://localhost:8000/api/v1/auth/login", data)
         console.log(logData);
-        if (logData.data[0].role == "User") {
+        if (logData.data.role == "User") {
             console.log("You don't have permission");
         } else {
             console.log("Done");
             navigate("/home")
-            localStorage.setItem("user", JSON.stringify(logData.data[0]))
+            localStorage.setItem("user", JSON.stringify(logData.data))
         }
     };
     const onFinishFailed = (errorInfo) => {

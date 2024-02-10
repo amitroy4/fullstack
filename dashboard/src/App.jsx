@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ChangePassword from './pages/ChangePassword';
 import Home from './pages/Home';
+import UserList from './pages/UserList';
 
 function App() {
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter(
         path="/home"
         element={<Home />}
       >
+        <Route
+        path="userlist"
+        element={<UserList />}
+      ></Route>
       </Route>
     </Route>
 

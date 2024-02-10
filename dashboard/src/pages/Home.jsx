@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { Menu,Col, Row } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -12,9 +13,10 @@ function getItem(label, key, icon, children, type) {
 }
 
 const Home = () => {
+  let navigate = useNavigate()
     const items = [
         getItem('Users', 'sub1', <MailOutlined />, [
-          getItem('Merchant', '1'),
+          getItem('Merchant', '/home/userlist'),
           getItem('Users', '2'),
         ]),
         getItem('Product', 'sub2', <AppstoreOutlined />, [
@@ -38,16 +40,31 @@ const Home = () => {
         }
       };
 
+      let handleClick = (event)=>{
+        console.log(event);
+        navigate(event.key)
+      }
+
   return (
-    <Menu
+
+    <Row>
+    <Col span={8}>
+    <Menu 
       mode="inline"
       openKeys={openKeys}
       onOpenChange={onOpenChange}
+      onClick={handleClick}
       style={{
         width: 256,
       }}
       items={items}
     />
+    </Col>
+    <Col span={16}>
+      <Outlet/>
+    </Col>
+  </Row>
+    
   )
 }
 
