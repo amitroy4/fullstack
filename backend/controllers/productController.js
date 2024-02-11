@@ -1,10 +1,24 @@
+const Products = require("../model/productSchema");
+
 
 let productController = (req, res) => {
+    let { name,image, description, rating, status, regularprice, price, brand } = req.body;
 
+    let product = new Products({
 
-        let { name, description } = req.body;
+    name: name,
+    image: image,
+    description: description,
+    price: price,
+    regularprice: regularprice,
+    rating: rating,
+    status: status,
+    brand: brand,
 
-       console.log("Product",name, description);
+    });
+
+    product.save();
+    console.log(product);
 
 };
 

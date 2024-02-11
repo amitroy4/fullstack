@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 
 const productSchema = new Schema({
-    
+
     name: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ const productSchema = new Schema({
         type: Number,
       required: true,
     },
-    states: {
+    status: {
         type: String,
         enum: ["InStock", "OutOFStock"],
         default: "InStock",
