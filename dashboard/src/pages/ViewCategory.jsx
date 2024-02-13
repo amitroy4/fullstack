@@ -1,11 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Space, Table } from "antd";
+import { Space, Table, Modal, Form, Input, Button } from "antd";
 
 const ViewCategory = () => {
   let [data, setData] = useState([]);
   let [loadData, setloadData] = useState(false);
   let [loading, setloading] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editId, setEditId] = useState("");
+  const showModal = (id) => {
+    setEditId(id);
+    setIsModalOpen(true);
+    console.log(editId);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   let handleDelete = async (id) => {
     setloading(id);
@@ -21,6 +34,19 @@ const ViewCategory = () => {
     console.log(data);
     setloading(false);
   };
+
+  const onFinishModal = async (values) => {
+    console.log("SuccessModal:", values, editId);
+    let reponse = await axios.post(
+      "http://localhost:8000/api/v1/product/editcategory",
+      {
+        name: values.categoryname,
+        id: editId,
+      }
+    );
+    console.log(reponse.data.success);
+  };
+
   const columns = [
     {
       title: "Name",
@@ -37,11 +63,13 @@ const ViewCategory = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit {record.name}</a>
-          <a onClick={() => handleDelete(record.key)}>
+          <Button onClick={() => showModal(record.key)}>
+            Edit {record.name}
+          </Button>
+          <Button onClick={() => handleDelete(record.key)}>
             {" "}
             {(loading == record.key ? true : false) ? "Loading..." : "Delete"}
-          </a>
+          </Button>
         </Space>
       ),
     },
@@ -68,7 +96,55 @@ const ViewCategory = () => {
   }, [loadData]);
   return (
     <>
-      <h1>Categories</h1>
+      <h1>Categories({data.length})</h1>
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinishModal}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Category Name"
+            name="categoryname"
+            rules={[
+              {
+                required: true,
+                message: "Please input your category name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Table columns={columns} dataSource={data} />
     </>
   );
