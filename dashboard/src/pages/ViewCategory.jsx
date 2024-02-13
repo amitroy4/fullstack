@@ -9,10 +9,11 @@ const ViewCategory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
   const showModal = (id) => {
+    console.log(id);
     setEditId(id);
     setIsModalOpen(true);
-    console.log(editId);
   };
+  console.log(editId);
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -44,6 +45,8 @@ const ViewCategory = () => {
         id: editId,
       }
     );
+    setloadData(!loadData);
+    setIsModalOpen(false);
     console.log(reponse.data.success);
   };
 
@@ -63,9 +66,7 @@ const ViewCategory = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showModal(record.key)}>
-            Edit {record.name}
-          </Button>
+          <Button onClick={() => showModal(record.key)}>Edit</Button>
           <Button onClick={() => handleDelete(record.key)}>
             {" "}
             {(loading == record.key ? true : false) ? "Loading..." : "Delete"}
@@ -98,7 +99,7 @@ const ViewCategory = () => {
     <>
       <h1>Categories({data.length})</h1>
       <Modal
-        title="Basic Modal"
+        title="Edit Category"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
