@@ -1,9 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Space, Table, Tag } from "antd";
+import { Space, Table } from "antd";
 
 const ViewCategory = () => {
   let [data, setData] = useState([]);
+  let [loadData, setloadData] = useState(false);
+  let [loading, setloading] = useState("");
+
+  let handleDelete = async (id) => {
+    setloading(id);
+    console.log("Delete id ", id);
+
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/product/deletecategory",
+      {
+        id: id,
+      }
+    );
+    setloadData(!loadData);
+    console.log(data);
+    setloading(false);
+  };
   const columns = [
     {
       title: "Name",
@@ -21,7 +38,10 @@ const ViewCategory = () => {
       render: (_, record) => (
         <Space size="middle">
           <a>Edit {record.name}</a>
-          <a>Delete</a>
+          <a onClick={() => handleDelete(record.key)}>
+            {" "}
+            {(loading == record.key ? true : false) ? "Loading..." : "Delete"}
+          </a>
         </Space>
       ),
     },
@@ -45,7 +65,7 @@ const ViewCategory = () => {
       setData(arr);
     }
     viewcategory();
-  });
+  }, [loadData]);
   return (
     <>
       <h1>Categories</h1>

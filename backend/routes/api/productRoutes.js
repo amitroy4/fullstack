@@ -8,9 +8,11 @@ const allsubCategoryController = require("../../controllers/allSubCategoryContro
 
 const productController = require("../../controllers/productController");
 const allCategoryController = require("../../controllers/allCategoryController");
+const deletecategoryController = require("../../controllers/deleteCategory");
 
 _.post("/createcategory", categoryController);
 _.get("/allcategory", allCategoryController);
+_.post("/deletecategory", deletecategoryController);
 
 _.post("/subcategory", subCategoryController);
 _.get("/allsubcategory", allsubCategoryController);

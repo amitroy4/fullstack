@@ -14,7 +14,10 @@ const AddCategory = () => {
         ownerId: data.id,
       }
     );
-    console.log(reponse);
+    console.log(reponse.data.success);
+    // if (reponse.data.success == "Successfully Created") {
+    //   values.categoryname = "";
+    // }
   };
 
   return (
