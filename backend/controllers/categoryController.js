@@ -9,6 +9,7 @@ let categoryController = async (req, res) => {
   });
 
   category.save();
+  res.send({ success: "Successfully Created" });
   console.log(category);
 };
 

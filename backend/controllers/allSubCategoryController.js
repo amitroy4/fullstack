@@ -1,10 +1,10 @@
 const subCategory = require("../model/subCategorySchema");
 
 let allSubCategoryController = async (req, res) => {
-  let categoryData = await subCategory.find({}).populate("subCategoryId");
-  res.send(categoryData);
+  let subcategoryData = await subCategory.find({}).populate("subCategoryId");
+  res.send(subcategoryData);
 
-  console.log(categoryData);
+  console.log(subcategoryData);
 };
 
 module.exports = allSubCategoryController;

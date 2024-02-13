@@ -7,12 +7,10 @@ const subCategoryController = require("../../controllers/subCategoryController")
 const allsubCategoryController = require("../../controllers/allSubCategoryController");
 
 const productController = require("../../controllers/productController");
+const allCategoryController = require("../../controllers/allCategoryController");
 
 _.post("/createcategory", categoryController);
-_.get("/allcreatecategory", async function (req, res) {
-  let data = await category.find({}).populate("ownerId");
-  res.send(data);
-});
+_.get("/allcategory", allCategoryController);
 
 _.post("/subcategory", subCategoryController);
 _.get("/allsubcategory", allsubCategoryController);

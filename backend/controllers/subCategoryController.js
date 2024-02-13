@@ -8,6 +8,7 @@ let subCategoryController = async (req, res) => {
     category: category,
   });
   subCategory.save();
+  console.log(subCategory);
 };
 
 module.exports = subCategoryController;
