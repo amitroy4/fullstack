@@ -9,6 +9,7 @@ let subCategoryController = async (req, res) => {
   });
   subCategory.save();
   console.log(subCategory);
+  res.send({ success: "Subcategory Created Successfully" });
 };
 
 module.exports = subCategoryController;

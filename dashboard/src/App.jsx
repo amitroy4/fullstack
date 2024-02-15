@@ -14,6 +14,8 @@ import Home from "./pages/Home";
 import UserList from "./pages/UserList";
 import ViewCategory from "./pages/ViewCategory";
 import AddCategory from "./pages/AddCategory";
+import AddSubCategory from "./pages/AddSubCategory";
+import ViewSubCategory from "./pages/ViewSubCategory";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ const router = createBrowserRouter(
         <Route path="userlist" element={<UserList />}></Route>
         <Route path="viewcategory" element={<ViewCategory />}></Route>
         <Route path="addcategory" element={<AddCategory />}></Route>
+        <Route path="addsubcategory" element={<AddSubCategory />}></Route>
+        <Route path="viewsubcategory" element={<ViewSubCategory />}></Route>
       </Route>
     </Route>
   )
