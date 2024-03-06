@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Space, Table, Modal, Form, Input, Button } from "antd";
+import { useSelector } from "react-redux";
 
 const ViewCategory = () => {
   let [data, setData] = useState([]);
@@ -8,6 +9,7 @@ const ViewCategory = () => {
   let [loading, setloading] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
+  const userdata = useSelector((state) => state.activeUser.value);
   const showModal = (id) => {
     console.log(id);
     setEditId(id);
@@ -50,6 +52,21 @@ const ViewCategory = () => {
     console.log(reponse.data.success);
   };
 
+  let handleApprove = async (item) => {
+    setloading(item.key);
+    console.log(item);
+    let reponse = await axios.post(
+      "http://localhost:8000/api/v1/product/approvecategory",
+      {
+        isActive: item.active == "Approved" ? false : true,
+        id: item.key,
+      }
+    );
+    setloadData(!loadData);
+    setloading("");
+    console.log(reponse.data.success);
+  };
+
   const columns = [
     {
       title: "Name",
@@ -66,11 +83,23 @@ const ViewCategory = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showModal(record.key)}>Edit</Button>
+          {userdata.role == "Merchant" && (
+            <Button onClick={() => showModal(record.key)}>Edit</Button>
+          )}
+
           <Button onClick={() => handleDelete(record.key)}>
             {" "}
             {(loading == record.key ? true : false) ? "Loading..." : "Delete"}
           </Button>
+          {userdata.role == "Admin" && (
+            <Button
+              onClick={() => handleApprove(record)}
+              loading={loading == record.key ? true : false}
+            >
+              {" "}
+              {record.active == "Approved" ? "Hold" : "Approve"}
+            </Button>
+          )}
         </Space>
       ),
     },

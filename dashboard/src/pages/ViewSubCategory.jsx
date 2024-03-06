@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Space, Table, Modal, Form, Input, Button } from "antd";
+import { useSelector } from "react-redux";
 
 const ViewSubCategory = () => {
   let [data, setData] = useState([]);
@@ -8,6 +9,7 @@ const ViewSubCategory = () => {
   let [loading, setloading] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
+  const userdata = useSelector((state) => state.activeUser.value);
   const showModal = (id) => {
     console.log(id);
     setEditId(id);
@@ -62,15 +64,23 @@ const ViewSubCategory = () => {
       key: "active",
     },
     {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => showModal(record.key)}>Edit</Button>
+          {userdata.role == "Merchant" && (
+            <Button onClick={() => showModal(record.key)}>Edit</Button>
+          )}
           <Button onClick={() => handleDelete(record.key)}>
             {" "}
             {(loading == record.key ? true : false) ? "Loading..." : "Delete"}
           </Button>
+          {userdata.role == "Admin" && <Button>Approve</Button>}
         </Space>
       ),
     },
@@ -83,22 +93,26 @@ const ViewSubCategory = () => {
         "http://localhost:8000/api/v1/product/allsubcategory"
       );
 
+      // console.log("hello",data.data[0].category.name);
+
       data.data.map((item) => {
         arr.push({
           key: item._id,
           name: item.name,
+          category: item.category.name,
           active: item.isActive ? "Approved" : "Pending",
         });
       });
 
       setData(arr);
+      console.log("list", arr);
     }
     viewcategory();
   }, [loadData]);
 
   return (
     <>
-      <h1>Categories({data.length})</h1>
+      <h1>SubCategories({data.length})</h1>
       <Modal
         title="Edit Sub-Category"
         open={isModalOpen}

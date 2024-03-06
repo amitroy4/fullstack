@@ -12,11 +12,13 @@ const deletecategoryController = require("../../controllers/deleteCategory");
 const editCategoryController = require("../../controllers/editCategoryController");
 const deletesubcategoryController = require("../../controllers/deleteSubCategory");
 const editSubCategoryController = require("../../controllers/editSubCategory");
+const approveCategoryController = require("../../controllers/approveCategoryController");
 
 _.post("/createcategory", categoryController);
 _.get("/allcategory", allCategoryController);
 _.post("/deletecategory", deletecategoryController);
 _.post("/editcategory", editCategoryController);
+_.post("/approvecategory", approveCategoryController);
 
 _.post("/subcategory", subCategoryController);
 _.get("/allsubcategory", allsubCategoryController);
