@@ -16,6 +16,7 @@ import ViewCategory from "./pages/ViewCategory";
 import AddCategory from "./pages/AddCategory";
 import AddSubCategory from "./pages/AddSubCategory";
 import ViewSubCategory from "./pages/ViewSubCategory";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
         <Route path="addcategory" element={<AddCategory />}></Route>
         <Route path="addsubcategory" element={<AddSubCategory />}></Route>
         <Route path="viewsubcategory" element={<ViewSubCategory />}></Route>
+        <Route path="addproduct" element={<AddProduct />}></Route>
       </Route>
     </Route>
   )

@@ -7,33 +7,12 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
     required: true,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
   brand: {
     type: String,
-  },
-  regularprice: {
-    type: Number,
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["InStock", "OutOFStock"],
-    default: "InStock",
-  },
-  rating: {
-    type: Number,
-    required: true,
   },
 });
 
