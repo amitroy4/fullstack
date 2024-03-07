@@ -59,12 +59,21 @@ const UserList = () => {
 
   useEffect(() => {
     let username = [];
+    let userList = [];
     async function user() {
       let userData = await axios.get(
         "http://localhost:8000/api/v1/auth/alluser"
       );
+
+      userData.data.map((item) => {
+        if (item.role == "User") {
+          userList.push({
+            ...item,
+          });
+        }
+      });
       // console.log(userData);
-      setuserlist(userData.data);
+      setuserlist(userList);
       userData.data.map((item) => {
         username.push({
           text: item.name,
