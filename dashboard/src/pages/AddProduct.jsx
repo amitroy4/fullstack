@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input, Card, Col, Row } from "antd";
+import axios from "axios";
 
 const AddProduct = () => {
   let [variantvalue, setVariantvalue] = useState([]);
   let [value, setValue] = useState("");
   let [valueStock, setValueStock] = useState("");
+  const onFinishMain = async (values) => {
+    let data = await axios.post(
+      "http://localhost:8000/api/v1/product/products",
+      {
+        name: values.name,
+        description: values.description,
+        variant: variantvalue,
+      }
+    );
+    console.log("Success:", data);
+  };
   const onFinish = (values) => {
     console.log("Success:", values);
     let arr = [...variantvalue];
@@ -60,7 +72,7 @@ const AddProduct = () => {
         initialValues={{
           remember: true,
         }}
-        onFinish={onFinish}
+        onFinish={onFinishMain}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >

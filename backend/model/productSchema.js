@@ -13,11 +13,9 @@ const varientSchema = new Schema({
 const productSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
   variant: [varientSchema],
 });
