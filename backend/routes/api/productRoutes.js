@@ -13,6 +13,8 @@ const editCategoryController = require("../../controllers/editCategoryController
 const deletesubcategoryController = require("../../controllers/deleteSubCategory");
 const editSubCategoryController = require("../../controllers/editSubCategory");
 const approveCategoryController = require("../../controllers/approveCategoryController");
+const createStoreController = require("../../controllers/createStoreController");
+const allStoreController = require("../../controllers/allStoreController");
 
 _.post("/createcategory", categoryController);
 _.get("/allcategory", allCategoryController);
@@ -25,5 +27,8 @@ _.get("/allsubcategory", allsubCategoryController);
 _.post("/deletesubcategory", deletesubcategoryController);
 _.post("/editsubcategory", editSubCategoryController);
 _.post("/products", productController);
+
+_.post("/createstore", createStoreController);
+_.get("/allstore/:id", allStoreController);
 
 module.exports = _;

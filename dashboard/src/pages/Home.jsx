@@ -40,12 +40,16 @@ const Home = () => {
         getItem("View Product", "8"),
       ]),
     ]),
-    getItem("Discount", "sub6", <SettingOutlined />, [
-      getItem("Add Discount", "9"),
-      getItem("View Discount", "10"),
+    getItem("Store", "sub6", <SettingOutlined />, [
+      getItem("Add Store", "/home/addstore"),
+      getItem("View Store", "10"),
+    ]),
+    getItem("Discount", "sub7", <SettingOutlined />, [
+      getItem("Add Discount", "11"),
+      getItem("View Discount", "12"),
     ]),
   ];
-  const rootSubmenuKeys = ["sub1", "sub2", "sub6"];
+  const rootSubmenuKeys = ["sub1", "sub2", "sub6", "sub7"];
   const [openKeys, setOpenKeys] = useState(["sub1"]);
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);

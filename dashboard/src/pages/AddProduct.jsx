@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Card, Col, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Select, Form, Input, Card, Col, Row } from "antd";
 import axios from "axios";
 
 const AddProduct = () => {
   let [variantvalue, setVariantvalue] = useState([]);
   let [value, setValue] = useState("");
   let [valueStock, setValueStock] = useState("");
+  let [storelist, setStorelist] = useState([]);
   const onFinishMain = async (values) => {
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
@@ -56,6 +57,16 @@ const AddProduct = () => {
     setVariantvalue(arr);
   };
 
+  useEffect(() => {
+    async function getData() {
+      let data = await axios.get(
+        "http://localhost:8000/api/v1/product/allstore/65e8d039afaebe4f2cf5b2c4"
+      );
+      setStorelist(data.data);
+    }
+    getData();
+  }, []);
+
   return (
     <>
       <Form
@@ -99,6 +110,22 @@ const AddProduct = () => {
           ]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Store/Brand"
+          name="store"
+          rules={[
+            {
+              required: true,
+              message: "Please Select Store/Brand!",
+            },
+          ]}
+        >
+          <Select>
+            {storelist.map((item) => (
+              <Select.Option value={item._id}>{item.storename}</Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item
