@@ -15,6 +15,18 @@ const editSubCategoryController = require("../../controllers/editSubCategory");
 const approveCategoryController = require("../../controllers/approveCategoryController");
 const createStoreController = require("../../controllers/createStoreController");
 const allStoreController = require("../../controllers/allStoreController");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 _.post("/createcategory", categoryController);
 _.get("/allcategory", allCategoryController);
@@ -26,7 +38,7 @@ _.post("/subcategory", subCategoryController);
 _.get("/allsubcategory", allsubCategoryController);
 _.post("/deletesubcategory", deletesubcategoryController);
 _.post("/editsubcategory", editSubCategoryController);
-_.post("/products", productController);
+_.post("/products", upload.single("avatar"), productController);
 
 _.post("/createstore", createStoreController);
 _.get("/allstore/:id", allStoreController);
