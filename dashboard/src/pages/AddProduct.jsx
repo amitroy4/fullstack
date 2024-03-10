@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Select, Form, Input, Card, Col, Row } from "antd";
+import { Button, Select, Form, Input, Card, Col, Row, Upload } from "antd";
 import axios from "axios";
 
 const AddProduct = () => {
@@ -8,6 +8,8 @@ const AddProduct = () => {
   let [value, setValue] = useState("");
   let [valueStock, setValueStock] = useState("");
   let [storelist, setStorelist] = useState([]);
+  let [image, setImage] = useState({});
+  let [imagePrev, setImagePrev] = useState("");
   const onFinishMain = async (values) => {
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
@@ -15,6 +17,12 @@ const AddProduct = () => {
         name: values.name,
         description: values.description,
         variant: variantvalue,
+        avatar: image,
+      },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
     );
     console.log("Success:", data);
@@ -75,6 +83,11 @@ const AddProduct = () => {
     getData();
   }, []);
 
+  let handleChange = (e) => {
+    setImage(e.target.files[0]);
+    setImagePrev(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <>
       <Form
@@ -94,6 +107,7 @@ const AddProduct = () => {
         onFinish={onFinishMain}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
+        enctype="multipart/form-data"
       >
         <Form.Item
           label="Product Name"
@@ -107,6 +121,9 @@ const AddProduct = () => {
         >
           <Input />
         </Form.Item>
+        <Input onChange={handleChange} type="file" />
+        {imagePrev && <img src={imagePrev} width={100} height={100} />}
+
         <Form.Item
           label="Description"
           name="description"
