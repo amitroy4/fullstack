@@ -4,6 +4,7 @@ import axios from "axios";
 
 const AddProduct = () => {
   let [variantvalue, setVariantvalue] = useState([]);
+  let [checkSize, setCheckSize] = useState("");
   let [value, setValue] = useState("");
   let [valueStock, setValueStock] = useState("");
   let [storelist, setStorelist] = useState([]);
@@ -19,14 +20,21 @@ const AddProduct = () => {
     console.log("Success:", data);
   };
   const onFinish = (values) => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
     let arr = [...variantvalue];
-
+    if (values.variantname.toLowerCase() == "size") {
+      setCheckSize("size");
+    }
     arr.push({
       name: values.variantname,
       value: [],
     });
-    setVariantvalue(arr);
+
+    if (arr.length <= 3) {
+      setVariantvalue(arr);
+    } else {
+      console.log("Out of Array size");
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -198,10 +206,21 @@ const AddProduct = () => {
                         placeholder="Value name"
                         onChange={(e) => setValue(e.target.value)}
                       />
-                      <input
-                        placeholder="Stock"
-                        onChange={(e) => setValueStock(e.target.value)}
-                      />
+                      {item.name == "size" && variantvalue.length == 1 ? (
+                        <input
+                          placeholder="Stock"
+                          onChange={(e) => setValueStock(e.target.value)}
+                        />
+                      ) : (
+                        item.name == "color" &&
+                        variantvalue.length != 1 && (
+                          <input
+                            placeholder="Stock"
+                            onChange={(e) => setValueStock(e.target.value)}
+                          />
+                        )
+                      )}
+
                       <Button onClick={() => handleVariantValue(index)}>
                         Add
                       </Button>
