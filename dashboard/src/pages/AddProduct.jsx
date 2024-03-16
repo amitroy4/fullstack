@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Select, Form, Input, Card, Col, Row, Upload } from "antd";
 import axios from "axios";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const AddProduct = () => {
   let [variantvalue, setVariantvalue] = useState([]);
@@ -10,6 +12,7 @@ const AddProduct = () => {
   let [storelist, setStorelist] = useState([]);
   let [image, setImage] = useState({});
   let [imagePrev, setImagePrev] = useState("");
+  let [productType, setProductType] = useState("");
   const onFinishMain = async (values) => {
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
@@ -87,7 +90,10 @@ const AddProduct = () => {
     setImage(e.target.files[0]);
     setImagePrev(URL.createObjectURL(e.target.files[0]));
   };
-
+  let handleSelectChange = (e) => {
+    setProductType(e);
+    // console.log(e);
+  };
   return (
     <>
       <Form
@@ -109,6 +115,24 @@ const AddProduct = () => {
         autoComplete="off"
         enctype="multipart/form-data"
       >
+        <Select
+          defaultValue="variant"
+          style={{
+            width: 120,
+          }}
+          options={[
+            {
+              value: "variant",
+              label: "variant",
+            },
+            {
+              value: "nonvariant",
+              label: "Non variant",
+            },
+          ]}
+          onChange={handleSelectChange}
+        />
+
         <Form.Item
           label="Product Name"
           name="name"
@@ -123,6 +147,26 @@ const AddProduct = () => {
         </Form.Item>
         <Input onChange={handleChange} type="file" />
         {imagePrev && <img src={imagePrev} width={100} height={100} />}
+        {productType == "variant" && (
+          <CKEditor
+            editor={ClassicEditor}
+            data="<p>Hello from CKEditor&nbsp;5!</p>"
+            onReady={(editor) => {
+              // You can store the "editor" and use when it is needed.
+              console.log("Editor is ready to use!", editor);
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              console.log(data);
+            }}
+            onBlur={(event, editor) => {
+              console.log("Blur.", editor);
+            }}
+            onFocus={(event, editor) => {
+              console.log("Focus.", editor);
+            }}
+          />
+        )}
 
         <Form.Item
           label="Description"
@@ -164,6 +208,7 @@ const AddProduct = () => {
           </Button>
         </Form.Item>
       </Form>
+      {productType == "variant" &&
       <Form
         name="basic"
         labelCol={{
@@ -260,7 +305,8 @@ const AddProduct = () => {
             </>
           )}
         </Row>
-      </Form>
+
+      </Form>}
     </>
   );
 };
