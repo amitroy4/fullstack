@@ -19,6 +19,7 @@ const multer = require("multer");
 const allProductController = require("../../controllers/allProducts");
 const varientSchema = require("../../model/varientSchema");
 const varientController = require("../../controllers/varientController");
+const secureApi = require("../../middleware/secureApi");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -31,7 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-_.post("/createcategory", categoryController);
+_.post("/createcategory", secureApi, categoryController);
 _.get("/allcategory", allCategoryController);
 _.post("/deletecategory", deletecategoryController);
 _.post("/editcategory", editCategoryController);

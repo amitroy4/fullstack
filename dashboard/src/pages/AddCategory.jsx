@@ -12,6 +12,11 @@ const AddCategory = () => {
       {
         name: values.categoryname,
         ownerId: data.id,
+      },
+      {
+        headers: {
+          Authorization: "amit251",
+        },
       }
     );
     console.log(reponse.data.success);
