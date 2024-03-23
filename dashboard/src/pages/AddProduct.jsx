@@ -5,7 +5,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const AddProduct = () => {
-  let [variantvalue, setVariantvalue] = useState([]);
   let [checkSize, setCheckSize] = useState("");
   let [value, setValue] = useState("");
   let [valueStock, setValueStock] = useState("");
@@ -13,13 +12,15 @@ const AddProduct = () => {
   let [image, setImage] = useState({});
   let [imagePrev, setImagePrev] = useState("");
   let [productType, setProductType] = useState("");
+  let [description, setDescription] = useState("");
+  const { TextArea } = Input;
   const onFinishMain = async (values) => {
     let data = await axios.post(
       "http://localhost:8000/api/v1/product/products",
       {
         name: values.name,
-        description: values.description,
-        variant: variantvalue,
+        description: description,
+        // variant: variantvalue,
         avatar: image,
       },
       {
@@ -94,6 +95,11 @@ const AddProduct = () => {
     setProductType(e);
     // console.log(e);
   };
+
+  let handleAddVarient = () => {
+    let arr = [...variantvalue];
+    arr.push();
+  };
   return (
     <>
       <Form
@@ -116,7 +122,7 @@ const AddProduct = () => {
         enctype="multipart/form-data"
       >
         <Select
-          defaultValue="variant"
+          defaultValue="nonvariant"
           style={{
             width: 120,
           }}
@@ -147,10 +153,10 @@ const AddProduct = () => {
         </Form.Item>
         <Input onChange={handleChange} type="file" />
         {imagePrev && <img src={imagePrev} width={100} height={100} />}
-        {productType == "variant" && (
+        {productType == "variant" ? (
           <CKEditor
             editor={ClassicEditor}
-            data="<p>Hello from CKEditor&nbsp;5!</p>"
+            // data="<p>Hello from CKEditor&nbsp;5!</p>"
             onReady={(editor) => {
               // You can store the "editor" and use when it is needed.
               console.log("Editor is ready to use!", editor);
@@ -158,6 +164,7 @@ const AddProduct = () => {
             onChange={(event, editor) => {
               const data = editor.getData();
               console.log(data);
+              setDescription(data);
             }}
             onBlur={(event, editor) => {
               console.log("Blur.", editor);
@@ -166,20 +173,11 @@ const AddProduct = () => {
               console.log("Focus.", editor);
             }}
           />
+        ) : (
+          <Form.Item label="TextArea">
+            <TextArea rows={4} />
+          </Form.Item>
         )}
-
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: "Please input your description!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
         <Form.Item
           label="Store/Brand"
           name="store"
@@ -208,105 +206,41 @@ const AddProduct = () => {
           </Button>
         </Form.Item>
       </Form>
-      {productType == "variant" &&
-      <Form
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 1000,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Variant Name"
-          name="variantname"
-          rules={[
-            {
-              required: true,
-              message: "Please input your variant!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Add Variant
-          </Button>
-        </Form.Item>
-        <Row>
-          {variantvalue.length > 0 && (
-            <>
-              {variantvalue.map((item, index) => (
-                <Col span={8}>
-                  <Card
-                    style={{
-                      width: 300,
-                    }}
-                  >
-                    <Button onClick={() => handleDelete(index)}>Delete</Button>
-                    <>
-                      <div key={index}>
-                        <b>{item.name}</b>
-                      </div>
-                      <input
-                        placeholder="Value name"
-                        onChange={(e) => setValue(e.target.value)}
-                      />
-                      {item.name == "size" && variantvalue.length == 1 ? (
-                        <input
-                          placeholder="Stock"
-                          onChange={(e) => setValueStock(e.target.value)}
-                        />
-                      ) : (
-                        item.name == "color" &&
-                        variantvalue.length != 1 && (
-                          <input
-                            placeholder="Stock"
-                            onChange={(e) => setValueStock(e.target.value)}
-                          />
-                        )
-                      )}
-
-                      <Button onClick={() => handleVariantValue(index)}>
-                        Add
-                      </Button>
-                      {item.value.map((i, id) => (
-                        <>
-                          <p>{i.name}</p>
-                          <p>{i.stock}</p>
-                          <Button
-                            danger
-                            onClick={() => handleValueDelete(index, id)}
-                          >
-                            Delete
-                          </Button>
-                        </>
-                      ))}
-                    </>
-                  </Card>
-                </Col>
-              ))}
-            </>
-          )}
-        </Row>
-
-      </Form>}
+      {productType == "variant" && (
+        <>
+          <Form
+            name="basic"
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            style={{
+              maxWidth: 1000,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            <Form.Item
+              label="Variant Name"
+              name="variantname"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your variant!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
+        </>
+      )}
     </>
   );
 };

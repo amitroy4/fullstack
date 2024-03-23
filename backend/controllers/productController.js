@@ -5,18 +5,18 @@ let productController = (req, res) => {
 
   console.log(variant);
 
-  // res.send(`/uploads/${req.file.filename}`);
+  res.send(`/uploads/${req.file.filename}`);
 
-  // let product = new Products({
-  //   name: name,
-  //   description: description,
-  //   variant: variant,
-  //   image: `/uploads/${req.file.filename}`,
-  // });
+  let product = new Products({
+    name: name,
+    description: description,
+    variant: variant,
+    image: `/uploads/${req.file.filename}`,
+  });
 
-  // product.save();
-  // console.log(product);
-  // res.send("product created successful");
+  product.save();
+  console.log(product);
+  res.send("product created successful");
 };
 
 module.exports = productController;

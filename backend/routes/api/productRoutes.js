@@ -16,6 +16,9 @@ const approveCategoryController = require("../../controllers/approveCategoryCont
 const createStoreController = require("../../controllers/createStoreController");
 const allStoreController = require("../../controllers/allStoreController");
 const multer = require("multer");
+const allProductController = require("../../controllers/allProducts");
+const varientSchema = require("../../model/varientSchema");
+const varientController = require("../../controllers/varientController");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -39,6 +42,8 @@ _.get("/allsubcategory", allsubCategoryController);
 _.post("/deletesubcategory", deletesubcategoryController);
 _.post("/editsubcategory", editSubCategoryController);
 _.post("/products", upload.single("avatar"), productController);
+_.post("/varient", upload.single("vavatar"), varientController);
+_.get("/allproducts", allProductController);
 
 _.post("/createstore", createStoreController);
 _.get("/allstore/:id", allStoreController);
