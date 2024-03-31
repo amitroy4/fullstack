@@ -21,6 +21,9 @@ const AddVarient = () => {
         name: values.name,
         vavatar: image,
         productId: productId,
+        regularprice: values.regularprice,
+        salesprice: values.salesprice,
+        quantity: values.quantity,
       },
       {
         headers: {
@@ -102,6 +105,44 @@ const AddVarient = () => {
             {
               required: true,
               message: "Please input Varient name!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Regular Price"
+          name="regularprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input Regular Price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Sales Price"
+          name="salesprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input Sales Price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input Quantity!",
             },
           ]}
         >

@@ -13,6 +13,15 @@ const varientSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
   },
+  regularprice: {
+    type: String,
+  },
+  salesprice: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Varient", varientSchema);

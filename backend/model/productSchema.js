@@ -12,6 +12,15 @@ const productSchema = new Schema({
   image: {
     type: String,
   },
+  regularprice: {
+    type: String,
+  },
+  salesprice: {
+    type: String,
+  },
+  quantity: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);

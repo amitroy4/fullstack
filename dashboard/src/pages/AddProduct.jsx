@@ -16,8 +16,10 @@ const AddProduct = () => {
       {
         name: values.name,
         description: description,
-        // variant: variantvalue,
         avatar: image,
+        regularprice: values.regularprice,
+        salesprice: values.salesprice,
+        quantity: values.quantity,
       },
       {
         headers: {
@@ -78,6 +80,46 @@ const AddProduct = () => {
         >
           <Input />
         </Form.Item>
+
+        <Form.Item
+          label="Regular Price"
+          name="regularprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input Regular Price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Sales Price"
+          name="salesprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input Sales Price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input Quantity!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
         <Input onChange={handleChange} type="file" />
         {imagePrev && <img src={imagePrev} width={100} height={100} />}
         <CKEditor
